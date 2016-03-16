@@ -108,7 +108,7 @@
 
     <operator id="YuleModelUniformOperator.t:test" spec="Uniform" tree="@Tree.t:test" weight="30.0"/>
 
-    <operator id="YuleModelSubtreeSlide.t:test" spec="SubtreeSlide" tree="@Tree.t:test" weight="15.0"/>
+    <operator id="YuleModelSubtreeSlide.t:test" spec="SubtreeSlide" tree="@Tree.t:test" size="0.01" weight="15.0"/>
 
     <operator id="YuleModelNarrow.t:test" spec="Exchange" tree="@Tree.t:test" weight="15.0"/>
 
