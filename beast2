@@ -1,5 +1,0 @@
-#!/bin/sh
-
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib
-
-java -Djava.library.path=/usr/local/lib -jar ~/WorkSpace/benchmark/beast2.4.0.jar $*
