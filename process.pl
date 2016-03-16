@@ -28,21 +28,25 @@ foreach $f (glob("data/*.nex")) {
 open(FOUT,">generated/_experiment.sh");
 print FOUT "mkdir singleThread\n";
 print FOUT "cd singleThread\n";
+print FOUT "mkdir test_xml\n";
 doWith(1);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir doubleThread\n";
 print FOUT "cd doubleThread\n";
+print FOUT "mkdir test_xml\n";
 doWith(2);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir fourThread\n";
 print FOUT "cd fourThread\n";
+print FOUT "mkdir test_xml\n";
 doWith(4);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir GPU\n";
 print FOUT "cd GPU\n";
+print FOUT "mkdir test_xml\n";
 doGPU();
 print FOUT "cd ..\n";
 close FOUT;

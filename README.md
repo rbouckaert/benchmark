@@ -22,3 +22,6 @@ java -Djava.library.path=/usr/local/lib -jar /home/remco/data/beast/benchmark/be
 
 assuming beast1.8.3.jar and beast2.4.0.jar are in the main folder (change 
 the path to what is appropriate for your computer).
+
+run chmod 777 ./generated/_experiment.sh to make the script executable.  
+
