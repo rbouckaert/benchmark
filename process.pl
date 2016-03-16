@@ -59,10 +59,10 @@ sub doWith {
 	print FOUT "echo \"\" >times2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast1 -overwrite -beagle_instances $threads ../$f >> times1.dat 2>&1\n";
+		print FOUT "( time ../beast1 -overwrite -beagle_instances $threads ../$f ) >> times1.dat 2>&1\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast2 -overwrite -threads $threads ../$f >> times2.dat 2>&1\n";
+		print FOUT "( time ../beast2 -overwrite -threads $threads ../$f ) >> times2.dat 2>&1\n";
 	}
 }
 
@@ -72,10 +72,10 @@ sub doGPU {
 	print FOUT "echo \"\" >times1.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast1 -overwrite -beagle_GPU -beagle_order 1 ../$f >> times1.dat 2>&1\n";
+		print FOUT "( time ../beast1 -overwrite -beagle_GPU -beagle_order 1 ../$f ) >> times1.dat 2>&1\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast2 -overwrite -beagle_GPU ../$f >> times2.dat 2>&1\n";
+		print FOUT "( time ../beast2 -overwrite -beagle_GPU ../$f ) >> times2.dat 2>&1\n";
 	}
 }
 
