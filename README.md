@@ -26,4 +26,7 @@ the path to what is appropriate for your computer).
 
 Use `chmod a+x ./generated/_experiment.sh` to make the script executable.  
 
-Timing information will be displayed on the console.
+Timing information will be recorded in files times1.dat and times2.dat within each of the
+generated directories `singleThread`, `doubleThread`, `fourThread` and `GPU`.
+
+Run the perl script `summarise*.pl` specific to your OS to produce the summary.
