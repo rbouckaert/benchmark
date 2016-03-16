@@ -26,6 +26,7 @@ foreach $f (glob("data/*.nex")) {
 
 
 open(FOUT,">generated/_experiment.sh");
+print FOUT "#!/bin/bash\n";
 print FOUT "mkdir singleThread\n";
 print FOUT "cd singleThread\n";
 print FOUT "mkdir test_xml\n";
