@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" version="2.0">
+
+
+    
+
+
+    
+
+
+    
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+<run id="mcmc" spec="MCMC" chainLength="1000000">
+    <state id="state" storeEvery="5000">
+        <tree id="Tree.t:test" name="stateNode">
+            <taxonset id="TaxonSet.test" spec="TaxonSet">
+                <alignment idref="test"/>
+            </taxonset>
+        </tree>
+        <parameter id="birthRate.t:test" name="stateNode">1.0</parameter>
+        <parameter id="freqParameter.s:test" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="rateAC.s:test" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateAG.s:test" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateAT.s:test" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateCG.s:test" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateGT.s:test" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="proportionInvariant.s:test" lower="0.0" name="stateNode" upper="1.0">0.01</parameter>
+    </state>
+
+    <init id="RandomTree.t:test" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:test" taxa="@test">
+        <populationModel id="ConstantPopulation0.t:test" spec="ConstantPopulation">
+            <parameter id="randomPopSize.t:test" name="popSize">1.0</parameter>
+        </populationModel>
+    </init>
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+            <distribution id="YuleModel.t:test" spec="beast.evolution.speciation.YuleModel" birthDiffRate="@birthRate.t:test" tree="@Tree.t:test"/>
+            <prior id="YuleBirthRatePrior.t:test" name="distribution" x="@birthRate.t:test">
+                <Uniform id="Uniform.0" name="distr" upper="Infinity"/>
+            </prior>
+            <prior id="RateACPrior.s:test" name="distribution" x="@rateAC.s:test">
+                <Gamma id="Gamma.0" name="distr">
+                    <parameter id="RealParameter.0" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.01" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateAGPrior.s:test" name="distribution" x="@rateAG.s:test">
+                <Gamma id="Gamma.01" name="distr">
+                    <parameter id="RealParameter.02" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.03" estimate="false" name="beta">20.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateATPrior.s:test" name="distribution" x="@rateAT.s:test">
+                <Gamma id="Gamma.02" name="distr">
+                    <parameter id="RealParameter.04" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.05" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateCGPrior.s:test" name="distribution" x="@rateCG.s:test">
+                <Gamma id="Gamma.03" name="distr">
+                    <parameter id="RealParameter.06" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.07" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateGTPrior.s:test" name="distribution" x="@rateGT.s:test">
+                <Gamma id="Gamma.04" name="distr">
+                    <parameter id="RealParameter.08" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.09" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="PropInvariantPrior.s:test" name="distribution" x="@proportionInvariant.s:test">
+                <Uniform id="Uniform.01" name="distr"/>
+            </prior>
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution">
+            <distribution id="treeLikelihood.test" spec="ThreadedTreeLikelihood" data="@test" tree="@Tree.t:test">
+                <siteModel id="SiteModel.s:test" spec="SiteModel" proportionInvariant="@proportionInvariant.s:test">
+                    <parameter id="mutationRate.s:test" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="gammaShape.s:test" estimate="false" name="shape">1.0</parameter>
+                    <substModel id="gtr.s:test" spec="GTR" rateAC="@rateAC.s:test" rateAG="@rateAG.s:test" rateAT="@rateAT.s:test" rateCG="@rateCG.s:test" rateGT="@rateGT.s:test">
+                        <parameter id="rateCT.s:test" estimate="false" lower="0.0" name="rateCT">1.0</parameter>
+                        <frequencies id="estimatedFreqs.s:test" spec="Frequencies" frequencies="@freqParameter.s:test"/>
+                    </substModel>
+                </siteModel>
+                <branchRateModel id="StrictClock.c:test" spec="beast.evolution.branchratemodel.StrictClockModel">
+                    <parameter id="clockRate.c:test" estimate="false" name="clock.rate">1.0</parameter>
+                </branchRateModel>
+            </distribution>
+        </distribution>
+    </distribution>
+
+    <operator id="YuleBirthRateScaler.t:test" spec="ScaleOperator" parameter="@birthRate.t:test" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="YuleModelTreeScaler.t:test" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:test" weight="3.0"/>
+
+    <operator id="YuleModelTreeRootScaler.t:test" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:test" weight="3.0"/>
+
+    <operator id="YuleModelUniformOperator.t:test" spec="Uniform" tree="@Tree.t:test" weight="30.0"/>
+
+    <operator id="YuleModelSubtreeSlide.t:test" spec="SubtreeSlide" tree="@Tree.t:test" weight="15.0"/>
+
+    <operator id="YuleModelNarrow.t:test" spec="Exchange" tree="@Tree.t:test" weight="15.0"/>
+
+    <operator id="YuleModelWide.t:test" spec="Exchange" isNarrow="false" tree="@Tree.t:test" weight="3.0"/>
+
+    <operator id="YuleModelWilsonBalding.t:test" spec="WilsonBalding" tree="@Tree.t:test" weight="3.0"/>
+
+    <operator id="FrequenciesExchanger.s:test" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:test"/>
+    </operator>
+
+    <operator id="RateACScaler.s:test" spec="ScaleOperator" parameter="@rateAC.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateAGScaler.s:test" spec="ScaleOperator" parameter="@rateAG.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateATScaler.s:test" spec="ScaleOperator" parameter="@rateAT.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateCGScaler.s:test" spec="ScaleOperator" parameter="@rateCG.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateGTScaler.s:test" spec="ScaleOperator" parameter="@rateGT.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="proportionInvariantScaler.s:test" spec="ScaleOperator" parameter="@proportionInvariant.s:test" scaleFactor="0.5" weight="0.1"/>
+
+    <logger id="tracelog" fileName="test.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log idref="treeLikelihood.test"/>
+        <log id="TreeHeight.t:test" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:test"/>
+        <log idref="YuleModel.t:test"/>
+        <log idref="birthRate.t:test"/>
+        <log idref="freqParameter.s:test"/>
+        <log idref="rateAC.s:test"/>
+        <log idref="rateAG.s:test"/>
+        <log idref="rateAT.s:test"/>
+        <log idref="rateCG.s:test"/>
+        <log idref="rateGT.s:test"/>
+        <log idref="proportionInvariant.s:test"/>
+    </logger>
+
+    <logger id="screenlog" logEvery="1000">
+        <log idref="posterior"/>
+        <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    <logger id="treelog.t:test" fileName="tree.trees" logEvery="1000" mode="tree">
+        <log id="TreeWithMetaDataLogger.t:test" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:test"/>
+    </logger>
+
+</run>
+
+</beast>
