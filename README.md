@@ -10,11 +10,13 @@ These are called
 ../beast1 for running BEAST1 XML and could contain something like
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib
+
 java -Djava.library.path=/usr/local/lib -jar /home/remco/data/beast/benchmark/beast1.8.3.jar $*
 
 ../beast2 for runnign BEAST2 XML
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib
+
 java -Djava.library.path=/usr/local/lib -jar /home/remco/data/beast/benchmark/beast2.4.0.jar $*
 
 
