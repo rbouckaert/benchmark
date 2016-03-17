@@ -33,3 +33,13 @@ Run the perl script `summarise*.pl` specific to your OS to produce the summary.
 
 If you've run the `summariseLinux.pl` script, a table is produced in `data_frame.txt`
 which can be read into R.  This can be visualized using the `plot_summary.R` R script.
+
+
+For Mac OS, run "perl processMac.pl". Time will be logged in _time.txt_, and screen logs will be in _screen1.dat_ and _screen2.dat_.
+
+To remove noisy texts from _time.txt_ using the script `cleanTimeLogMac.sh` for all files or the following command for a single file:
+```bash
+sed -i.bak '/.*Fail.*/d;/.*line.*/d;/.*ile.*/d;/.*WARN.*/d;/.*Igno.*/d;/.*With.*/d;/.*Using.*/d;/.*End.*/d;/^\s*$/d' time.txt
+```
+
+Use R script `reportTimeMac.R` to plot figures and print tables.
