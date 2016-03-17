@@ -2,7 +2,7 @@
 
 BEAST benchmarking data
 
-run "perl process.pl" to generate XML files in the "generated" directory
+run `perl process.pl` to generate XML files in the "generated" directory
 
 It also produces a script `/generated/_experiment.sh`.  This assumes that 
 the root directory of this repository contains scripts for running BEAST 1 & 2,
@@ -35,7 +35,7 @@ If you've run the `summariseLinux.pl` script, a table is produced in `data_frame
 which can be read into R.  This can be visualized using the `plot_summary.R` R script.
 
 
-For Mac OS, run "perl processMac.pl". Time will be logged in _time.txt_, and screen logs will be in _screen1.dat_ and _screen2.dat_.
+For Mac OS, run `perl processMac.pl`. Time will be logged in _time.txt_, and screen logs will be in _screen1.dat_ and _screen2.dat_.
 
 To remove noisy texts from _time.txt_ using the script `cleanTimeLogMac.sh` for all files or the following command for a single file:
 ```bash
