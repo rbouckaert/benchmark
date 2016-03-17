@@ -30,3 +30,6 @@ Timing information will be recorded in files times1.dat and times2.dat within ea
 generated directories `singleThread`, `doubleThread`, `fourThread` and `GPU`.
 
 Run the perl script `summarise*.pl` specific to your OS to produce the summary.
+
+If you've run the `summariseLinux.pl` script, a table is produced in `data_frame.txt`
+which can be read into R.  This can be visualized using the `plot_summary.R` R script.
