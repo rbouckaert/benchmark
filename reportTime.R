@@ -121,14 +121,14 @@ reportTime <- function(time.df, test="1 Thread") {
 
 }
 
-time.df <- getTimeDFMac(file.path("1 Thread", "time.txt"))
-reportTime(time.df, "singleThread")
+time.df <- getTimeDFMac(file.path("singleThread", "time.txt"))
+reportTime(time.df, "1 Thread")
 
-time.df <- getTimeDFMac(file.path("2 Threads", "time.txt"))
-reportTime(time.df, "doubleThread")
+time.df <- getTimeDFMac(file.path("doubleThread", "time.txt"))
+reportTime(time.df, "2 Threads")
 
-time.df <- getTimeDFMac(file.path("4 Threads", "time.txt"))
-reportTime(time.df, "fourThread")
+time.df <- getTimeDFMac(file.path("fourThread", "time.txt"))
+reportTime(time.df, "4 Threads")
 
 time.df <- getTimeDFMac(file.path("GPU", "time.txt"))
 reportTime(time.df, "GPU")
