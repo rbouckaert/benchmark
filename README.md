@@ -42,4 +42,4 @@ To remove noisy texts from _time.txt_ using the script `cleanTimeLogMac.sh` for 
 sed -i.bak '/.*Fail.*/d;/.*line.*/d;/.*ile.*/d;/.*WARN.*/d;/.*Igno.*/d;/.*With.*/d;/.*Using.*/d;/.*End.*/d;/^\s*$/d' time.txt
 ```
 
-Use R script `reportTimeMac.R` to plot figures and print tables.
+Use R script `reportTime.R` to plot figures and print tables.
