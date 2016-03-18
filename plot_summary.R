@@ -1,6 +1,8 @@
 require(ggplot2)
 library(gridExtra)
 
+includeExtraDatasets <- TRUE
+
 grid_arrange_shared_legend <- function(...) {
     plots <- list(...)
     g <- ggplotGrob(plots[[1]] + theme(legend.position="bottom"))$grobs
@@ -16,6 +18,10 @@ grid_arrange_shared_legend <- function(...) {
 
 df <- read.table("data_frame.txt", header=T)
 
+if (!includeExtraDatasets) {
+    df <- df[df$dataset != "bench1" & df$dataset != "bench2" & df$dataset != "old",]
+}
+
 models <- c("GTR", "GTR.G", "GTR.I", "GTR.G.I")
 modelLabels <- c("GTR", "GTR+G", "GTR+I", "GTR+G+I")
 runs <- levels(df$run)
@@ -26,8 +32,12 @@ for (run in runs) {
     p <- list()
     for (m in 1:length(models)) {
         p[[m]] <- ggplot(df[df$run==run & df$model==models[m],])
-        p[[m]] <- p[[m]] + geom_bar(aes(dataset, time, fill=version), stat="identity", position="dodge")
-        p[[m]] <- p[[m]] + scale_y_log10()
+        p[[m]] <- p[[m]] + geom_bar(aes(dataset, time, fill=version),
+                                    stat="identity", position="dodge")
+
+        if (includeExtraDatasets)
+            p[[m]] <- p[[m]] + scale_y_log10()
+
         p[[m]] <- p[[m]] + theme(axis.text.x = element_text(angle=90, vjust=0.5, hjust=1))
         p[[m]] <- p[[m]] + labs(title=modelLabels[m], x="Dataset", y="Time (seconds)")
     }
