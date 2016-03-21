@@ -216,7 +216,7 @@
 		<operators idref="operators"/>
 
 		<!-- write log to screen                                                     -->
-		<log id="screenLog" logEvery="10000">
+		<log id="screenLog" logEvery="50000">
 			<column label="Posterior" dp="4" width="12">
 				<posterior idref="posterior"/>
 			</column>
@@ -235,8 +235,8 @@
 		</log>
 
 		<!-- write log to file                                                       -->
-<!--
-		<log id="fileLog" logEvery="10000" fileName="test.log" overwrite="false">
+
+		<log id="fileLog" logEvery="1000" fileName="test.log" overwrite="false">
 			<posterior idref="posterior"/>
 			<prior idref="prior"/>
 			<likelihood idref="likelihood"/>
@@ -255,7 +255,7 @@
 			<strictClockBranchRates idref="branchRates"/>
 			<speciationLikelihood idref="speciation"/>
 		</log>
--->
+
 		<!-- write tree log to file                                                  -->
 <!--
 <logTree id="treeFileLog" logEvery="1000" nexusFormat="true" fileName="test.trees" sortTranslationTable="true">

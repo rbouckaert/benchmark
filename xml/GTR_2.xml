@@ -16,8 +16,8 @@
 
 
 <run id="mcmc" spec="MCMC" chainLength="1000000">
-	<operatorschedule spec="OperatorSchedule" transform="log"/>
-    <state id="state" storeEvery="5000">
+	
+    <state id="state" storeEvery="10000000">
         <tree id="Tree.t:test" name="stateNode">
             <taxonset id="TaxonSet.test" spec="TaxonSet">
                 <alignment idref="test"/>
@@ -123,7 +123,7 @@
 
     <operator id="RateGTScaler.s:test" spec="ScaleOperator" parameter="@rateGT.s:test" scaleFactor="0.5" weight="0.1"/>
 
-<!--
+
 	<logger id="tracelog" fileName="test.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
         <log idref="posterior"/>
         <log idref="likelihood"/>
@@ -139,8 +139,8 @@
         <log idref="rateCG.s:test"/>
         <log idref="rateGT.s:test"/>
     </logger>
--->
-    <logger id="screenlog" logEvery="10000">
+
+    <logger id="screenlog" logEvery="50000">
         <log idref="posterior"/>
         <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
         <log idref="likelihood"/>
