@@ -21,7 +21,7 @@
 
 
 <run id="mcmc" spec="MCMC" chainLength="1000000">
-	<operatorschedule spec="OperatorSchedule" transform="log"/>
+	
     <state id="state" storeEvery="10000000">
         <tree id="Tree.t:test" name="stateNode">
             <taxonset id="TaxonSet.test" spec="TaxonSet">
