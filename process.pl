@@ -1,6 +1,6 @@
 
 `mkdir generated`;
-$chainLength="100000";
+$chainLength="1000000";
 
 foreach $f (glob("data/*.nex")) {
 	$n = 0;
