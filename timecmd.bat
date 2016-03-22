@@ -1,10 +1,12 @@
+:: http://stackoverflow.com/questions/673523/how-to-measure-execution-time-of-command-in-windows-command-line
+:: modified to redirect time to stream2 STDERR
 @echo off
 @setlocal 
 
 set start=%time%
 
 :: runs your command
-cmd /c %*
+%*
 
 set end=%time%
 set options="tokens=1-4 delims=:."
