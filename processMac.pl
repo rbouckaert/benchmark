@@ -2,7 +2,7 @@
 
 `mkdir generated`;
 $chainLength="1000000";
-$beagle_order="2"
+$beagle_order="2";
 
 foreach $f (glob("data/*.nex")) {
 	$n = 0;
@@ -29,28 +29,24 @@ foreach $f (glob("data/*.nex")) {
 
 open(FOUT,">generated/_experiment.sh");
 print FOUT "#!/bin/bash\n";
-print FOUT "rm -r singleThread\n";
 print FOUT "mkdir singleThread\n";
 print FOUT "cd singleThread\n";
 print FOUT "mkdir test_xml\n";
 doWith(1);
 print FOUT "cd ..\n";
 
-print FOUT "rm -r doubleThread\n";
 print FOUT "mkdir doubleThread\n";
 print FOUT "cd doubleThread\n";
 print FOUT "mkdir test_xml\n";
 doWith(2);
 print FOUT "cd ..\n";
 
-print FOUT "rm -r fourThread\n";
 print FOUT "mkdir fourThread\n";
 print FOUT "cd fourThread\n";
 print FOUT "mkdir test_xml\n";
 doWith(4);
 print FOUT "cd ..\n";
 
-print FOUT "rm -r GPU\n";
 print FOUT "mkdir GPU\n";
 print FOUT "cd GPU\n";
 print FOUT "mkdir test_xml\n";

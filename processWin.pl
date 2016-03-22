@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#Window7
 
-`mkdir generated`;
+`md generated`;
 $chainLength="1000000";
-$beagle_order="1"
+$beagle_order="1";
 
 foreach $f (glob("data/*.nex")) {
 	$n = 0;
@@ -28,28 +28,25 @@ foreach $f (glob("data/*.nex")) {
 
 
 open(FOUT,">generated/_experiment.bat");
-print FOUT "rd singleThread\n";
+print FOUT "\@ECHO OFF\n";
 print FOUT "md singleThread\n";
 print FOUT "cd singleThread\n";
 print FOUT "md test_xml\n";
 doWith(1);
 print FOUT "cd ..\n";
 
-print FOUT "rd doubleThread\n";
 print FOUT "md doubleThread\n";
 print FOUT "cd doubleThread\n";
 print FOUT "md test_xml\n";
 doWith(2);
 print FOUT "cd ..\n";
 
-print FOUT "rd fourThread\n";
 print FOUT "md fourThread\n";
 print FOUT "cd fourThread\n";
 print FOUT "md test_xml\n";
 doWith(4);
 print FOUT "cd ..\n";
 
-print FOUT "rd GPU\n";
 print FOUT "md GPU\n";
 print FOUT "cd GPU\n";
 print FOUT "md test_xml\n";
@@ -61,21 +58,21 @@ close FOUT;
 
 sub doWith {
 	$threads = shift;
-	print FOUT "echo \"\" >screen1.dat\n";
-	print FOUT "echo \"\" >screen2.dat\n";
+	print FOUT "echo. >screen1.dat\n";
+	print FOUT "echo. >screen2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
-		print FOUT "echo \"$f -threads 1\\n\" >> time.txt\n";
+		print FOUT "echo \"$f -threads 1\" >> time.txt\n";
 		# using thread pool
-		print FOUT "(timecmd ../beast1 -overwrite -beagle_instances $threads -threads $threads ../$f >> screen1.dat) 2>>time.txt\n";
-		print FOUT "echo \"\\n\" >> time.txt\n";
-		print FOUT "echo \"$f -threads 0\\n\" >> time.txt\n";
+		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_instances $threads -threads $threads ../$f >> screen1.dat 2>>time.txt\n";
+		print FOUT "echo. >> time.txt\n";
+		print FOUT "echo \"$f -threads 0\" >> time.txt\n";
 		# stop to use thread pool
-		print FOUT "(timecmd ../beast1 -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat) 2>>time.txt\n";		 
-		print FOUT "echo \"\\n\" >> time.txt\n";
+		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat 2>>time.txt\n";		 
+		print FOUT "echo. >> time.txt\n";
 		$f =~ s/_1_/_2_/;
-		print FOUT "echo \"$f\\n\" >> time.txt\n";
-		print FOUT "(timecmd ../beast2 -overwrite -instances $threads -threads $threads ../$f >> screen2.dat) 2>>time.txt\n";
-		print FOUT "echo \"\\n\" >> time.txt\n";
+		print FOUT "echo \"$f\" >> time.txt\n";
+		print FOUT "..\\timecmd ..\\beast2 -overwrite -instances $threads -threads $threads ../$f >> screen2.dat 2>>time.txt\n";
+		print FOUT "echo. >> time.txt\n";
 	}
 }
 
@@ -85,13 +82,13 @@ sub doGPU {
 	print FOUT "echo \"\" >screen1.dat\n";
 	print FOUT "echo \"\" >screen2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
-		print FOUT "echo \"$f\\n\" >> time.txt\n";
-		print FOUT "(timecmd ../beast1 -overwrite -beagle_GPU -beagle_order $beagle_order ../$f  >> screen1.dat) 2>>time.txt\n";
-		print FOUT "printf \"\\n\" >> time.txt\n";
+		print FOUT "echo \"$f\" >> time.txt\n";
+		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_GPU -beagle_order $beagle_order ../$f  >> screen1.dat 2>>time.txt\n";
+		print FOUT "echo. >> time.txt\n";
 		$f =~ s/_1_/_2_/;
-		print FOUT "echo \"$f\\n\" >> time.txt\n";
-		print FOUT "(timecmd ../beast2 -overwrite -beagle_GPU ../$f  >> screen2.dat) 2>>time.txt\n";
-		print FOUT "printf \"\\n\" >> time.txt\n";
+		print FOUT "echo \"$f\" >> time.txt\n";
+		print FOUT "..\\timecmd ..\beast2 -overwrite -beagle_GPU ../$f  >> screen2.dat 2>>time.txt\n";
+		print FOUT "echo. >> time.txt\n";
 	}
 }
 
