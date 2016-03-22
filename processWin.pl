@@ -87,7 +87,7 @@ sub doGPU {
 		print FOUT "echo. >> time.txt\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo \"$f\" >> time.txt\n";
-		print FOUT "..\\timecmd ..\beast2 -overwrite -beagle_GPU ../$f  >> screen2.dat 2>>time.txt\n";
+		print FOUT "..\\timecmd ..\\beast2 -overwrite -beagle_GPU ../$f  >> screen2.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
 	}
 }
