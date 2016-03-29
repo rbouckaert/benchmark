@@ -61,14 +61,16 @@ sub doWith {
 	print FOUT "echo. >screen1.dat\n";
 	print FOUT "echo. >screen2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
-		print FOUT "echo \"$f -threads 1\" >> time.txt\n";
+		print FOUT "echo \"$f\" >> time.txt\n";
 		# using thread pool
 		print FOUT "call ..\\beast1time -overwrite -beagle_instances $threads -threads $threads ../$f >> screen1.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
-		print FOUT "echo \"$f -threads 0\" >> time.txt\n";
-		# stop to use thread pool
-		print FOUT "call ..\\beast1time -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat 2>>time.txt\n";		 
-		print FOUT "echo. >> time.txt\n";
+		if ($threads=="1") {
+			print FOUT "echo \"$f -threads 0\" >> time.txt\n";
+		    # stop to use thread pool
+			print FOUT "call ..\\beast1time -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat 2>>time.txt\n";		 
+			print FOUT "echo. >> time.txt\n";
+		}
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo \"$f\" >> time.txt\n";
 		print FOUT "call ..\\beast2time -overwrite -instances $threads -threads $threads ../$f >> screen2.dat 2>>time.txt\n";
