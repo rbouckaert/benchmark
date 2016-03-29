@@ -63,15 +63,15 @@ sub doWith {
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo \"$f -threads 1\" >> time.txt\n";
 		# using thread pool
-		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_instances $threads -threads $threads ../$f >> screen1.dat 2>>time.txt\n";
+		print FOUT "call ..\\beast1time -overwrite -beagle_instances $threads -threads $threads ../$f >> screen1.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
 		print FOUT "echo \"$f -threads 0\" >> time.txt\n";
 		# stop to use thread pool
-		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat 2>>time.txt\n";		 
+		print FOUT "call ..\\beast1time -overwrite -beagle_instances $threads -threads 0 ../$f >> screen1.dat 2>>time.txt\n";		 
 		print FOUT "echo. >> time.txt\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo \"$f\" >> time.txt\n";
-		print FOUT "..\\timecmd ..\\beast2 -overwrite -instances $threads -threads $threads ../$f >> screen2.dat 2>>time.txt\n";
+		print FOUT "call ..\\beast2time -overwrite -instances $threads -threads $threads ../$f >> screen2.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
 	}
 }
@@ -83,11 +83,11 @@ sub doGPU {
 	print FOUT "echo \"\" >screen2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo \"$f\" >> time.txt\n";
-		print FOUT "..\\timecmd ..\\beast1 -overwrite -beagle_GPU -beagle_order $beagle_order ../$f  >> screen1.dat 2>>time.txt\n";
+		print FOUT "call ..\\beast1time -overwrite -beagle_GPU -beagle_order $beagle_order ../$f  >> screen1.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo \"$f\" >> time.txt\n";
-		print FOUT "..\\timecmd ..\\beast2 -overwrite -beagle_GPU ../$f  >> screen2.dat 2>>time.txt\n";
+		print FOUT "call ..\\beast2time -overwrite -beagle_GPU ../$f  >> screen2.dat 2>>time.txt\n";
 		print FOUT "echo. >> time.txt\n";
 	}
 }
