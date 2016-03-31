@@ -119,7 +119,7 @@ reportTime <- function(time.df, title="1 Thread", test=2, xtable.file=NULL) {
 	pdfGgplot(p6, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf.pdf"), width=6, height=6)
 }
 
-######## set up report latex #######
+######## report pipeline of Mac #######
 report.file <- file.path(getwd(), "report.tex")
 
 cat("\\documentclass{article}\n\n", file=report.file, append=FALSE)
@@ -154,6 +154,45 @@ cat(paste("\n\nComplete report : ", report.file))
 
 
 ######## different time log format 
+
+# For Windows time.txt has 2 lines for each xml, no newlines, which looks like
+#generated/_GTRGI_1_1044.xml 
+#command took 0:1:34.67 (94.67s total) 
+#generated/_GTRGI_2_1044.xml 
+#command took 0:1:24.70 (84.70s total) 
+getTimeDFWindows <- function(file, test=2) {
+	if (!(test == 2 || test == 3)) 
+		stop("Invalid test number !")
+
+	cat("Parsing time log", file, "from", getwd(), "\n")
+	linn <- readFileLineByLine(file)
+	length(linn)
+
+	time.m <- matrix(trimStartEnd(linn), ncol=2, byrow=TRUE)
+	time.m[,1] <- gsub("generated/_", "", time.m[,1], ignore.case = T)
+	time.m[,1] <- gsub(".xml", "", time.m[,1], ignore.case = T)
+	time.m[,1] <- gsub(".nex", "", time.m[,1], ignore.case = T)
+	time.m[,2] <- gsub("^.*\\((.*)s total\\).*$", "\\1", time.m[,2])
+
+	time.df <- as.data.frame(time.m[,1:2], stringsAsFactors = FALSE)
+	colnames(time.df) <- c("xml", "seconds")
+	time.df$model <- sapply(strsplit(time.df$xml, "_"), "[[", 1)
+	time.df$version <- sapply(strsplit(time.df$xml, "_"), "[[", 2)
+	time.df$version <- gsub("1", "1.8.3", time.df$version, ignore.case = T)
+	time.df$version <- gsub("2", "2.4.0", time.df$version, ignore.case = T)
+	time.df$test <- sapply(strsplit(time.df$xml, "_"), "[[", 3)
+	time.df$seconds <- as.numeric(time.df$seconds)
+	
+	if (test == 3) {
+		time.df$thread <- 1
+		time.df[grepl("threads 0", time.df$xml, ignore.case=TRUE), "thread"] <- 0
+		time.df$test <- gsub(" -threads 0", "", time.df$test, ignore.case = T)
+	}
+	
+	return(time.df)
+}
+
+
 
 # generated/_GTRGI_1_1044.xml
 #  20.11 real         23.90 user         1.72 sys
