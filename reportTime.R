@@ -153,7 +153,7 @@ reportTime <- function(time.df, test=2, title="1 Thread", xtable.file=NULL, is.p
 	if (!is.performance) {
 		p6 <- ggBoxWhiskersPlot(time.df.merge, x.id="model", y.id="performance", y.upper=2.5,
 								add.mean=TRUE, title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))
-		p6 <- ggLine(p6, linetype = 2, yintercept = 1)
+		p6 <- ggAddLine(p6, linetype = 2, yintercept = 1)
 		pdfGgplot(p6, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf.pdf"), width=6, height=6)
 	} else {
 		return(time.df.merge[,c("model","test","performance")])	
@@ -230,7 +230,7 @@ for (title in c("1 Thread", "2 Threads", "4 Threads")) {
 	setwd("~/WorkSpace/benchmark")
 	p <- ggBoxWhiskersPlot(perf.df, x.id="model", y.id="performance", fill.id="OS", y.upper=2.1,
 						title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))	
-	p <- ggLine(p, linetype = 2, yintercept = 1)
+	p <- ggAddLine(p, linetype = 2, yintercept = 1)
 	p <- ggAddNumbers(p, fun.y.lab=mean)
 	pdfGgplot(p, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf-all.pdf"), width=8, height=6)
 }
