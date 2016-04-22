@@ -151,7 +151,7 @@ reportTime <- function(time.df, test=2, title="1 Thread", xtable.file=NULL, is.p
 	time.df.merge$performance <- time.df.merge$seconds.x / time.df.merge$seconds.y 
 	
 	if (!is.performance) {
-		p6 <- ggBoxWhiskersPlot(time.df.merge, x.id="model", y.id="performance", y.upper=2.5,
+		p6 <- ggBoxWhiskersPlot(time.df.merge, x.id="model", y.id="performance", y.lim.cart=c(NA,2.5),
 								add.mean=TRUE, title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))
 		p6 <- ggAddLine(p6, linetype = 2, yintercept = 1)
 		pdfGgplot(p6, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf.pdf"), width=6, height=6)
@@ -228,7 +228,7 @@ for (title in c("1 Thread", "2 Threads", "4 Threads")) {
 	perf.df <- rbind(perf.df.mac, perf.df.lin, perf.df.win)
 
 	setwd("~/WorkSpace/benchmark")
-	p <- ggBoxWhiskersPlot(perf.df, x.id="model", y.id="performance", fill.id="OS", y.upper=2.1,
+	p <- ggBoxWhiskersPlot(perf.df, x.id="model", y.id="performance", fill.id="OS", y.lim.cart=c(NA,2.1),
 						title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))	
 	p <- ggAddLine(p, linetype = 2, yintercept = 1)
 	p <- ggAddNumbers(p, fun.y.lab=mean)
