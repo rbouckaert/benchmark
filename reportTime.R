@@ -135,7 +135,7 @@ reportTime <- function(time.df, test=2, title="1 Thread", xtable.file=NULL, is.p
 		p5 <- ggBarChart(benchmark, x.id="test", y.id="seconds", fill.id="version", title="Benchmarks")
 	
 		g.table <- grid_arrange_shared_legend(p1, p2, p3, p4, p5)
-		pdfGtable(g.table, fig.path=paste0(gsub(" ", "-", tolower(title)),".pdf"), width=10, height=12)
+		pdf.gtable(g.table, fig.path=paste0(gsub(" ", "-", tolower(title)),".pdf"), width=10, height=12)
 	}
 	
 	if (test == 3) {	
@@ -154,7 +154,7 @@ reportTime <- function(time.df, test=2, title="1 Thread", xtable.file=NULL, is.p
 		p6 <- ggBoxWhiskersPlot(time.df.merge, x.id="model", y.id="performance", y.lim.cart=c(NA,2.5),
 								add.mean=TRUE, title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))
 		p6 <- ggAddLine(p6, linetype = 2, yintercept = 1)
-		pdfGgplot(p6, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf.pdf"), width=6, height=6)
+		pdf.ggplot(p6, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf.pdf"), width=6, height=6)
 	} else {
 		return(time.df.merge[,c("model","test","performance")])	
 	}
@@ -232,7 +232,7 @@ for (title in c("1 Thread", "2 Threads", "4 Threads")) {
 						title=paste0("Speed of BEAST2 over BEAST1 (", title, ")"))	
 	p <- ggAddLine(p, linetype = 2, yintercept = 1)
 	p <- ggAddNumbers(p, fun.y.lab=mean)
-	pdfGgplot(p, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf-all.pdf"), width=8, height=6)
+	pdf.ggplot(p, fig.path=paste0(gsub(" ", "-", tolower(title)),"-perf-all.pdf"), width=8, height=6)
 }
 
 ######## different time log format 
