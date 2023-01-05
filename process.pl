@@ -1,6 +1,6 @@
 
 `mkdir generated`;
-$chainLength="100000";
+$chainLength="1000000";
 
 foreach $f (glob("data/*.nex")) {
 	$n = 0;
@@ -26,23 +26,28 @@ foreach $f (glob("data/*.nex")) {
 
 
 open(FOUT,">generated/_experiment.sh");
+print FOUT "#!/bin/bash\n";
 print FOUT "mkdir singleThread\n";
 print FOUT "cd singleThread\n";
+print FOUT "mkdir singleThread/test_xml\n";
 doWith(1);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir doubleThread\n";
 print FOUT "cd doubleThread\n";
+print FOUT "mkdir doubleThread/test_xml\n";
 doWith(2);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir fourThread\n";
 print FOUT "cd fourThread\n";
+print FOUT "mkdir fourThread/test_xml\n";
 doWith(4);
 print FOUT "cd ..\n";
 
 print FOUT "mkdir GPU\n";
 print FOUT "cd GPU\n";
+print FOUT "mkdir GPU/test_xml\n";
 doGPU();
 print FOUT "cd ..\n";
 close FOUT;
@@ -55,10 +60,12 @@ sub doWith {
 	print FOUT "echo \"\" >times2.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast1 -overwrite -beagle_instances $threads ../$f >> times1.dat 2>&1\n";
+		print FOUT "/usr/bin/time ../beast1 -overwrite -beagle_instances $threads -threads $threads ../$f >/dev/null 2>> times1.dat\n";
+		print FOUT "printf \"\\n\"\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast2 -overwrite -threads $threads ../$f >> times2.dat 2>&1\n";
+		print FOUT "/usr/bin/time ../beast2 -overwrite -instances $threads -threads $threads ../$f >/dev/null 2>> times2.dat\n";
+		print FOUT "printf \"\\n\"\n";
 	}
 }
 
@@ -68,10 +75,12 @@ sub doGPU {
 	print FOUT "echo \"\" >times1.dat\n";
 	foreach $f (sort(glob("generated/*_1_*.xml"))) {
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast1 -overwrite -beagle_GPU -beagle_order 1 ../$f >> times1.dat 2>&1\n";
+		print FOUT "/usr/bin/time ../beast1 -overwrite -beagle_GPU -beagle_order 1 ../$f >/dev/null 2>> times1.dat\n";
+		print FOUT "printf \"\\n\"\n";
 		$f =~ s/_1_/_2_/;
 		print FOUT "echo $f\n";
-		print FOUT "time ../beast2 -overwrite -beagle_GPU ../$f >> times2.dat 2>&1\n";
+		print FOUT "/usr/bin/time ../beast2 -overwrite -beagle_GPU ../$f >/dev/null 2>> times2.dat\n";
+		print FOUT "printf \"\\n\"\n";
 	}
 }
 

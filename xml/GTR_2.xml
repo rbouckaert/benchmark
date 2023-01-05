@@ -16,7 +16,8 @@
 
 
 <run id="mcmc" spec="MCMC" chainLength="1000000">
-    <state id="state" storeEvery="5000">
+	
+    <state id="state" storeEvery="10000000">
         <tree id="Tree.t:test" name="stateNode">
             <taxonset id="TaxonSet.test" spec="TaxonSet">
                 <alignment idref="test"/>
@@ -100,7 +101,7 @@
 
     <operator id="YuleModelUniformOperator.t:test" spec="Uniform" tree="@Tree.t:test" weight="30.0"/>
 
-    <operator id="YuleModelSubtreeSlide.t:test" spec="SubtreeSlide" tree="@Tree.t:test" weight="15.0"/>
+    <operator id="YuleModelSubtreeSlide.t:test" spec="SubtreeSlide" tree="@Tree.t:test" size="0.01" weight="15.0"/>
 
     <operator id="YuleModelNarrow.t:test" spec="Exchange" tree="@Tree.t:test" weight="15.0"/>
 
@@ -122,7 +123,8 @@
 
     <operator id="RateGTScaler.s:test" spec="ScaleOperator" parameter="@rateGT.s:test" scaleFactor="0.5" weight="0.1"/>
 
-    <logger id="tracelog" fileName="test.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+
+	<logger id="tracelog" fileName="test.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
         <log idref="posterior"/>
         <log idref="likelihood"/>
         <log idref="prior"/>
@@ -138,17 +140,17 @@
         <log idref="rateGT.s:test"/>
     </logger>
 
-    <logger id="screenlog" logEvery="1000">
+    <logger id="screenlog" logEvery="50000">
         <log idref="posterior"/>
         <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
         <log idref="likelihood"/>
         <log idref="prior"/>
     </logger>
-
+<!--
     <logger id="treelog.t:test" fileName="test.trees" logEvery="1000" mode="tree">
         <log id="TreeWithMetaDataLogger.t:test" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:test"/>
     </logger>
-
+-->
 </run>
 
 </beast>

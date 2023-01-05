@@ -1,0 +1,8 @@
+Files for performance comparison of BEAST v2.6 vs v2.7.
+
+*/*2.6.xml: files produced by BEAUti v2.6
+*/*2.7a.xml: same model as produced by BEAUti v2.6 with BICEPS and Bactrian operators
+*/*2.7b.xml: as */*2.7a.xml but with AVMN and adaptable operators
+*/*2.7c.xml: */*2.7b.xml but reweighted adaptable operators
+
+For more details, see http://www.beast2.org/2023/01/04/beast-2.6-vs-2.7-performance-benchmarking.html

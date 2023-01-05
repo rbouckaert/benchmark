@@ -36,7 +36,7 @@
 	<!-- that is used to generate an initial tree for the chain.                 -->
 	<constantSize id="initialDemo" units="years">
 		<populationSize>
-			<parameter id="initialDemo.popSize" value="100.0"/>
+			<parameter id="initialDemo.popSize" value="1.0"/>
 		</populationSize>
 	</constantSize>
 
@@ -124,19 +124,19 @@
 
 	<!-- Define operators                                                        -->
 	<operators id="operators" optimizationSchedule="default">
-		<scaleOperator scaleFactor="0.75" weight="1">
+		<scaleOperator scaleFactor="0.5" weight="1">
 			<parameter idref="ac"/>
 		</scaleOperator>
-		<scaleOperator scaleFactor="0.75" weight="1">
+		<scaleOperator scaleFactor="0.5" weight="1">
 			<parameter idref="ag"/>
 		</scaleOperator>
-		<scaleOperator scaleFactor="0.75" weight="1">
+		<scaleOperator scaleFactor="0.5" weight="1">
 			<parameter idref="at"/>
 		</scaleOperator>
-		<scaleOperator scaleFactor="0.75" weight="1">
+		<scaleOperator scaleFactor="0.5" weight="1">
 			<parameter idref="cg"/>
 		</scaleOperator>
-		<scaleOperator scaleFactor="0.75" weight="1">
+		<scaleOperator scaleFactor="0.5" weight="1">
 			<parameter idref="gt"/>
 		</scaleOperator>
 		<deltaExchange delta="0.01" weight="1">
@@ -154,16 +154,16 @@
 		<wilsonBalding weight="30">
 			<treeModel idref="treeModel"/>
 		</wilsonBalding>
-		<scaleOperator scaleFactor="0.75" weight="30">
+		<scaleOperator scaleFactor="0.5" weight="30">
 			<parameter idref="treeModel.rootHeight"/>
 		</scaleOperator>
 		<uniformOperator weight="300">
 			<parameter idref="treeModel.internalNodeHeights"/>
 		</uniformOperator>
-		<scaleOperator scaleFactor="0.75" weight="30">
+		<scaleOperator scaleFactor="0.5" weight="30">
 			<parameter idref="yule.birthRate"/>
 		</scaleOperator>
-		<upDownOperator scaleFactor="0.75" weight="30">
+		<upDownOperator scaleFactor="0.5" weight="30">
 			<up>
 			</up>
 			<down>
@@ -207,7 +207,7 @@
 		<operators idref="operators"/>
 
 		<!-- write log to screen                                                     -->
-		<log id="screenLog" logEvery="1000">
+		<log id="screenLog" logEvery="50000">
 			<column label="Posterior" dp="4" width="12">
 				<posterior idref="posterior"/>
 			</column>
@@ -226,7 +226,7 @@
 		</log>
 
 		<!-- write log to file                                                       -->
-		<log id="fileLog" logEvery="1000" fileName="test.log" overwrite="false">
+	<log id="fileLog" logEvery="1000" fileName="test.log" overwrite="false">
 			<posterior idref="posterior"/>
 			<prior idref="prior"/>
 			<likelihood idref="likelihood"/>
@@ -246,17 +246,18 @@
 		</log>
 
 		<!-- write tree log to file                                                  -->
-		<logTree id="treeFileLog" logEvery="1000" nexusFormat="true" fileName="test.trees" sortTranslationTable="true">
+<!--		<logTree id="treeFileLog" logEvery="1000" nexusFormat="true" fileName="test.trees" sortTranslationTable="true">
 			<treeModel idref="treeModel"/>
 			<trait name="rate" tag="rate">
 				<strictClockBranchRates idref="branchRates"/>
 			</trait>
 			<posterior idref="posterior"/>
-		</logTree>
-	</mcmc>
+		</logTree>-->
+</mcmc>
 	<report>
 		<property name="timer">
 			<mcmc idref="mcmc"/>
 		</property>
 	</report>
+	
 </beast>

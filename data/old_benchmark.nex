@@ -1,6 +1,5 @@
 #NEXUS
 
-# sourced from https://github.com/beast-dev/beast-mcmc/tree/master/examples/release/Benchmarks
 begin data;
 	dimensions ntax=17 nchar=1485;
 	format datatype=dna missing=? gap=-;
